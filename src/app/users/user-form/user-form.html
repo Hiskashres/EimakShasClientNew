@@ -1,20 +1,20 @@
-<h2>Add new user</h2>
+<!-- <h2>Add new user</h2> -->
 
 <form (ngSubmit)="onSubmit()">
-    <label>First name</label>
+    <label>ערשטע נאמען</label>
     <input [(ngModel)]="user.firstName" name="firstName" required />
 
-    <label>Last name</label>
+    <label>לעצטע נאמען</label>
     <input [(ngModel)]="user.lastName" name="lastName" required />
 
-    <label>Phone</label>
+    <label>פאון</label>
     <input [(ngModel)]="user.phone" name="phone"/>
     
-    <label>Daf per day</label>
-    <input [(ngModel)]="user.dafPerDay" name="dafPerDay"/>
+    <label>דף ליום</label>
+    <input type="checkbox" [(ngModel)]="user.dafPerDay" name="dafPerDay"/>
 
-    <label>Has text</label>
-    <input [(ngModel)]="user.hasText" name="hasText"/>
+    <label>טעקסט</label>
+    <input type="checkbox" [(ngModel)]="user.hasText" name="hasText"/>
 
     <button type="submit">Add User</button>
 </form>

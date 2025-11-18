@@ -1,0 +1,36 @@
+<div class="masechta-list">
+    <h2>מסכתות</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>מסכת</th>
+                <th>ס"ה דפים</th>
+                <th>דפים געלערנט</th>
+                <th>פראצענט געלערנט</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr  *ngFor="let masechta of masechtas">
+                <td (click)="loadDafim(masechta.masechtaId)">
+                    {{ masechta.masechtaName }}
+                </td>
+                <td>{{masechta.masechtaDafCount}}</td>
+                <td>{{masechta.dafimFinished}}</td>
+                <td>%{{masechta.percentageFinished}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="dafim.length">
+    <button *ngFor="let d of dafim"
+    [class.selected]="selectedDafim.includes(d.dafId)"
+    (click)="selectDafim(d.dafId)">
+    {{ d.dafLetter }}
+    </button>
+</div>
+
+<div *ngIf="mode === 'selectDafim' && dafim.length">
+    <button (click)="addDafimToUser(userId!)">Save</button>
+</div>

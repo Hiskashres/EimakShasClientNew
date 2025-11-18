@@ -1,1 +1,38 @@
-<p>user-list works!</p>
+<h2>לומדים</h2>
+
+<button routerLink="/users/add">נייע לומד</button>
+
+<table>
+    <thead>
+        <tr>
+            <th>נאמען</th>
+            <th>פאון</th>
+            <th>דף ליום</th>
+            <th>מסכתא א</th>
+            <th>מסכתא ב</th>
+            <th>ס"ה דפים</th>
+            <th>דפים געלערנט</th>
+            <th>פראצענט געלערנט</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td><b>{{ user.firstName }} {{ user.lastName }}</b></td>
+            <td>{{ user.phone }}</td>
+            <td><b>{{ user.dafPerDay ? '✓' : '✕' }}</b></td>
+            <td *ngFor="let masechta of user.masechtasAssigned">
+                {{masechta.masechtaName}} {{masechta.firstDaf}}-{{masechta.lastDaf}}
+            </td>
+            <td></td>
+            <td>{{user.dafimAmount}}</td>
+            <td>{{user.dafimFinished}}</td>
+            <td>%{{user.percentageFinished}}</td>
+            <td>
+                <button routerLink="/users/{{ user.userId }}/dafim">Add</button>
+                <button (click)="onDelete(user.userId)">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
