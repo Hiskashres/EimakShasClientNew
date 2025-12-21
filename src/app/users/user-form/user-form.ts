@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./user-form.scss',]
 })
 export class UserFormComponent {
-user: User = {userId: 0, firstName: '', lastName: '', phone: '', dafimAmount: 0, dafimFinished: 0, percentageFinished: 0, dafPerDay: true, hasText: true, isAdmin: false};
+user: User = {userId: 0, firstName: '', lastName: '', phone: '', dafimAmount: 0, dafimCompleted: 0, dafimNotCompleted: 0, percentageCompleted: 0, dafPerDay: true, hasText: true};
 
 constructor(private userService: UserService) {}
 

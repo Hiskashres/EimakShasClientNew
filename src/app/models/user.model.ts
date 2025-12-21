@@ -6,12 +6,15 @@ export interface User {
     firstName: string;
     lastName: string;
     phone?: string;
-    passwordHash?: string
+    // passwordHash?: string
     dafimAmount: number;
-    dafimFinished: number;
-    percentageFinished: number;
+    dafimCompleted: number;
+    dafimNotCompleted: number;
+    percentageCompleted: number;
     dafPerDay: boolean;
     hasText: boolean;
-    isAdmin: boolean;
+    // isAdmin: boolean;
+    chavrisaId?: number;
+    chavrisaName?: string;
     masechtasAssigned?: UserMasechta[];
 }

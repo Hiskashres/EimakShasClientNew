@@ -1,9 +1,10 @@
 export interface Masechta {
     masechtaId: number;
     masechtaName: string;
-    masechtaDafCount: number;
     masechtaOrder: number
+    dafimAmount: number;
+    dafimCompleted: number;
+    dafimNotCompleted: number;
+    percentageCompleted: number;
     lastUmidDoubleSided: boolean;
-    dafimFinished: number;
-    percentageFinished: number;
 }

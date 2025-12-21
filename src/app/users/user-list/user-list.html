@@ -6,12 +6,14 @@
     <thead>
         <tr>
             <th>נאמען</th>
+            <td>חברותא</td>
             <th>פאון</th>
             <th>דף ליום</th>
             <th>מסכתא א</th>
             <th>מסכתא ב</th>
             <th>ס"ה דפים</th>
             <th>דפים געלערנט</th>
+            <th>נאכנישט געלערנט</th>
             <th>פראצענט געלערנט</th>
             <th></th>
         </tr>
@@ -20,15 +22,18 @@
     <tbody>
         <tr *ngFor="let user of users">
             <td><b>{{ user.firstName }} {{ user.lastName }}</b></td>
+            <td>{{user.chavrisaName}}</td>
             <td>{{ user.phone }}</td>
             <td><b>{{ user.dafPerDay ? '✓' : '✕' }}</b></td>
             <td *ngFor="let masechta of user.masechtasAssigned">
                 {{masechta.masechtaName}} {{masechta.firstDaf}}-{{masechta.lastDaf}}
             </td>
             <td></td>
+            <td></td>
             <td>{{user.dafimAmount}}</td>
-            <td>{{user.dafimFinished}}</td>
-            <td>%{{user.percentageFinished}}</td>
+            <td>{{user.dafimCompleted}}</td>
+            <td>{{user.dafimNotCompleted}}</td>
+            <td>%{{user.percentageCompleted}}</td>
             <td>
                 <button routerLink="/users/{{ user.userId }}/dafim">Add</button>
                 <button (click)="onDelete(user.userId)">Delete</button>
