@@ -1,0 +1,15 @@
+<!-- <div class="masechta-list"> -->
+    <h2>מסכתות</h2>
+
+<div *ngFor="let masechta of masechtas" (click)="loadDafim(masechta.masechtaId)">
+    {{ masechta.masechtaName }}
+</div>
+
+<div *ngIf="dafim.length">
+    <button *ngFor="let d of dafim"
+    [class.selected]="selectedDafim.includes(d.dafId)"
+    (click)="selectDafim(d.dafId)">
+    {{ d.dafLetter }}
+    </button>
+</div>
+<!-- <h1>TEST</h1> -->

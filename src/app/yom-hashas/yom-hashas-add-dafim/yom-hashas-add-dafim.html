@@ -1,0 +1,9 @@
+<h3>Add Dafim</h3>
+
+<!-- <router-outlet></router-outlet> -->
+
+<app-select-dafim (dafimSelected)="onDafimSelected($event)"></app-select-dafim>
+
+<div *ngIf="selectedDafim.length">
+    <button (click)="saveSelection()">Save</button>
+</div>

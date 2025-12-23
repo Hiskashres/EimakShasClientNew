@@ -1,24 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { YomHashasInfo } from '../../models/yom-hashas-info.model';
+import { YomHashasService } from '../../services/yom-hashas.service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-yom-hashas-main',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './yom-hashas-main.html',
   styleUrls: ['./yom-hashas-main.scss'],
 })
-export class YomHashasMain {
-  yomHashasInfo: YomHashasInfo =  { 
-    mainGoal: 0, 
-    bonusGoal: 0, 
-    endTime: '', 
-    dafimAmount: 0, 
-    dafimFinished: 0, 
-    dafimNotFinished: 0, 
-    percentageFinished: 0, 
-    dafimNotFinished_bonus: 0, 
-    percentageFinished_bonus: 0 
-  }
+export class YomHashasMain implements OnInit{
 
+yomHashasInfo!: YomHashasInfo;
+
+constructor(private service: YomHashasService) {}
+
+ngOnInit(): void {
+  this.service.getYomHashasInfo().subscribe(data => {
+    this.yomHashasInfo = data;
+  })
+}
 
 }

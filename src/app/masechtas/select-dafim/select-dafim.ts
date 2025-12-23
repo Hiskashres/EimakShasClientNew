@@ -5,14 +5,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Masechta } from '../../models/masechta.model';
 
 @Component({
-  selector: 'app-masechta-list',
+  selector: 'app-select-dafim',
   imports: [CommonModule],
-  templateUrl: './masechta-list.html',
-  styleUrls: ['./masechta-list.scss'],
+  templateUrl: './select-dafim.html',
+  styleUrls: ['./select-dafim.scss'],
 })
-export class MasechtaListComponent implements OnInit {
-  @Input() mode: 'viewMasechtas' | 'selectDafim' = 'viewMasechtas';
-  @Input() userId?: number;
+export class SelectDafim implements OnInit {
 
   masechtas: Masechta[] = [];
   dafim: any[] = [];
@@ -25,17 +23,6 @@ export class MasechtaListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe((data) => {
-      if (data['mode']) {
-        this.mode = data['mode'];
-      }
-    })
-
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('userId');
-      if (id) this.userId = +id;
-    });
-
     this.loadMasechtas();
   }
 
@@ -55,8 +42,6 @@ export class MasechtaListComponent implements OnInit {
   }
 
   selectDafim(dafId: number) {
-    if (this.mode !== 'selectDafim') return;
-
     if (this.selectedDafim.length === 0) {
       this.selectedDafim.push(dafId);
       return;
@@ -76,20 +61,4 @@ export class MasechtaListComponent implements OnInit {
   private emitSelection() {
     this.dafimSelected.emit(this.selectedDafim);
   }
-
-    
-  // addDafimToUser(userId: number) {
-  //   if (this.mode !== 'selectDafim') return;
-
-  //   const body = {
-  //     userId: userId,
-  //     dafimIds: this.selectedDafim
-  //   }
-
-  //   this.http.post('https://localhost:7066/api/AssignUserToUmid/AssignDafim', body)
-  //     .subscribe({
-  //       next: res => console.log('Dafim assigned successfully', res),
-  //       error: err => console.error(err)
-  //     });
-  // }
 }
