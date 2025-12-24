@@ -19,17 +19,21 @@ export class UserFormComponent {
 
   constructor(private userService: UserService) {}
 
-  getUsers() {
+  ngOnInit() {
+    this.loadUsers();
+  }
+
+  loadUsers() {
     this.userService.getUsers().subscribe(list => {
       this.users = list;
     });
   }
 
-  onSelect(event: Event) {
-    const id = Number((event.target as HTMLSelectElement).value)
-    this.selectedUserId = id;
-    this.user = this.users.find(u => u.userId === id)!;
+  onSelect(userId: number) {
+    this.selectedUserId = userId;
+    this.user = this.users.find(u => u.userId === userId)!;
   }
+
 
   onSubmit() {
     this.userService.addUser(this.user).subscribe({
