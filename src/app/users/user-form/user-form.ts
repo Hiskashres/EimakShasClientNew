@@ -7,26 +7,41 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,],
   templateUrl: './user-form.html',
   styleUrls: ['./user-form.scss',]
 })
 export class UserFormComponent {
-user: User = {userId: 0, firstName: '', lastName: '', phone: '', dafimAmount: 0, dafimCompleted: 0, dafimNotCompleted: 0, percentageCompleted: 0, dafPerDay: true, hasText: true};
+  users: User[] = [];
+  selectedUserId!: number;
 
-constructor(private userService: UserService) {}
+  user: User = {userId: 0, firstName: '', lastName: '', phone: '', dafimAmount: 0, dafimCompleted: 0, dafimNotCompleted: 0, percentageCompleted: 0, dafPerDay: true, hasText: true};
 
-onSubmit() {
-  this.userService.addUser(this.user).subscribe({
-    next: (res) => {
-      this.user = res;
-      alert(`${this.user.firstName} ${this.user.lastName} has been added\nUser ID ${this.user.userId}`);
-      console.log('Saved user:', res);
-    },
-    error: (err) => {
-      alert(`Error while adding ${this.user.firstName} ${this.user.lastName}`);
-console.error(err);
-    }
-  });
-}
+  constructor(private userService: UserService) {}
+
+  getUsers() {
+    this.userService.getUsers().subscribe(list => {
+      this.users = list;
+    });
+  }
+
+  onSelect(event: Event) {
+    const id = Number((event.target as HTMLSelectElement).value)
+    this.selectedUserId = id;
+    this.user = this.users.find(u => u.userId === id)!;
+  }
+
+  onSubmit() {
+    this.userService.addUser(this.user).subscribe({
+      next: (res) => {
+        this.user = res;
+        alert(`${this.user.firstName} ${this.user.lastName} has been added\nUser ID ${this.user.userId}`);
+        console.log('Saved user:', res);
+      },
+      error: (err) => {
+        alert(`Error while adding ${this.user.firstName} ${this.user.lastName}`);
+  console.error(err);
+      }
+    });
+  }
 }

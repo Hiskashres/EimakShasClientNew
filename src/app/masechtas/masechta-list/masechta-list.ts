@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
 import { Masechta } from '../../models/masechta.model';
 
 @Component({
@@ -11,31 +10,14 @@ import { Masechta } from '../../models/masechta.model';
   styleUrls: ['./masechta-list.scss'],
 })
 export class MasechtaListComponent implements OnInit {
-  @Input() mode: 'viewMasechtas' | 'selectDafim' = 'viewMasechtas';
-  @Input() userId?: number;
-
   masechtas: Masechta[] = [];
   dafim: any[] = [];
   selectedMasechta: number | null = null;
   selectedDafim: number[] = [];
 
-  constructor(
-    private http: HttpClient,
-    private route: ActivatedRoute
-  ) {}
+  constructor( private http: HttpClient ) {}
 
   ngOnInit() {
-    this.route.data.subscribe((data) => {
-      if (data['mode']) {
-        this.mode = data['mode'];
-      }
-    })
-
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('userId');
-      if (id) this.userId = +id;
-    });
-
     this.loadMasechtas();
   }
 
@@ -54,28 +36,9 @@ export class MasechtaListComponent implements OnInit {
       });
   }
 
-  selectDafim(dafId: number) {
-    if (this.mode !== 'selectDafim') return;
 
-    if (this.selectedDafim.length === 0) {
-      this.selectedDafim.push(dafId);
-      return;
-    }
 
-    const selectedDafimIndex = this.selectedDafim.indexOf(dafId)
 
-    if (selectedDafimIndex >= 0)
-      this.selectedDafim.splice(selectedDafimIndex, 1)
-    else this.selectedDafim.push(dafId)
-
-    this.emitSelection();
-  }
-
-  @Output() dafimSelected = new EventEmitter<number[]>();
-
-  private emitSelection() {
-    this.dafimSelected.emit(this.selectedDafim);
-  }
 
     
   // addDafimToUser(userId: number) {

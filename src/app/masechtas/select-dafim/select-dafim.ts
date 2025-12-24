@@ -44,14 +44,26 @@ export class SelectDafim implements OnInit {
   selectDafim(dafId: number) {
     if (this.selectedDafim.length === 0) {
       this.selectedDafim.push(dafId);
+      this.emitSelection();
       return;
     }
 
-    const selectedDafimIndex = this.selectedDafim.indexOf(dafId)
+    if (this.selectedDafim.includes(dafId)) {
+      this.selectedDafim = this.selectedDafim.filter(dafId => dafId !== dafId);
+      this.emitSelection();
+      return;
+    }
 
-    if (selectedDafimIndex >= 0)
-      this.selectedDafim.splice(selectedDafimIndex, 1)
-    else this.selectedDafim.push(dafId)
+    const firstSelected = Math.min(...this.selectedDafim, dafId);
+    const lastSelected = Math.max(...this.selectedDafim, dafId);
+
+    this.selectedDafim = this.dafim
+    .map(d => d.dafId)
+    .filter(dafId => dafId >= firstSelected && dafId <= lastSelected);
+
+    // if (selectedDafimIndex >= 0)
+    //   this.selectedDafim.splice(selectedDafimIndex, 1)
+    // else this.selectedDafim.push(dafId)
 
     this.emitSelection();
   }

@@ -9,6 +9,11 @@
 
     <label>פאון</label>
     <input [(ngModel)]="user.phone" name="phone"/>
+
+    <select (click)="getUsers()" (change)="onSelect($event)">
+        <option value="''" [disabled]="selectedUserId"></option>
+        <option *ngFor="let user of users" [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+    </select>
     
     <label>דף ליום</label>
     <input type="checkbox" [(ngModel)]="user.dafPerDay" name="dafPerDay"/>

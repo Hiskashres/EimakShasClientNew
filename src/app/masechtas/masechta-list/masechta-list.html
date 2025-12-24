@@ -1,3 +1,12 @@
+<h1 routerLink="">חבורת לומדי ש"ס</h1>
+<h4>ישיבת עמק החכמה ~ חורף תשפ"ו</h4>
+  <nav>
+    <a routerLink="/users"> לומדים</a>
+    <a routerLink="/masechtas"> מסכתות</a>
+    <a routerLink="/yom-hashas">יום הש"ס</a>
+  </nav>
+
+
 <div class="masechta-list">
     <h2>מסכתות</h2>
     <table>
@@ -23,11 +32,6 @@
     </table>
 </div>
 
-<div *ngIf="dafim.length">
-    <button *ngFor="let d of dafim"
-    [class.selected]="selectedDafim.includes(d.dafId)"
-    (click)="selectDafim(d.dafId)">
+    <button *ngFor="let d of dafim">
     {{ d.dafLetter }}
     </button>
-</div>
-

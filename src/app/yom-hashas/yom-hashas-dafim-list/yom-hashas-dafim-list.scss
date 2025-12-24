@@ -1,0 +1,233 @@
+// Yom Hashas Dafim list styles (SCSS)
+// Aim: reproduce the visual style from the provided photo:
+// - dark teal header with large mint headline and side logos
+// - large cream panel with many rounded "daf" pills laid out in many columns
+// - occasional dark teal selected pill rows across columns
+// - subtle inner dividers and soft shadows
+//
+// Notes:
+// - The SCSS uses sensible variables for colors/spacing so you can tweak to match exact pixel colors.
+// - This file assumes the markup for the list uses RTL (Hebrew) and classes shown below.
+// - Example markup (simplified):
+// <section class="yom-hashas">
+//   <header class="yom-hashas__head"> ... big title and side logos ... </header>
+//   <div class="yom-hashas__panel">
+//     <div class="yom-hashas-dafim-list">
+//       <article class="daf-card">...</article>
+//       ...
+//     </div>
+//   </div>
+//   <footer class="yom-hashas__foot"> ... </footer>
+// </section>
+
+$dark-teal-1: #21393b;      // header darkest
+$dark-teal-2: #324f50;      // header mid
+$mint: #cfe6d7;             // headline mint color
+$cream: #efe4d0;            // page panel background
+$pill-bg: #f6edd9;          // normal pill background
+$pill-border: rgba(0,0,0,0.06);
+$pill-text: #2b2b2b;
+$pill-muted: #856d53;       // small meta text color
+$selected-p: #2c4849;      // selected pill dark
+$selected-text: #e6f1ef;
+$footer-bg: #a7b1b0;
+$shadow-subtle: 0 2px 0 rgba(0,0,0,0.04);
+$shadow-lift: 0 6px 18px rgba(15, 20, 18, 0.08);
+
+.yom-hashas {
+  // overall layout
+  direction: rtl; // Hebrew layout
+  font-family: "Helvetica Neue", Arial, "Segoe UI", -apple-system, "Noto Sans", "Frank Ruhl Libre", sans-serif;
+  color: $pill-text;
+  background-color: $cream;
+
+  &__head {
+    background: linear-gradient(180deg, $dark-teal-1 0%, $dark-teal-2 100%);
+    color: $mint;
+    padding: 36px 24px;
+    text-align: center;
+    position: relative;
+    box-shadow: $shadow-subtle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+
+    // big Hebrew headline
+    .yom-hashas__title {
+      font-size: 84px;
+      line-height: 0.9;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: $mint;
+      text-shadow: 0 2px 0 rgba(0,0,0,0.08);
+      margin: 0;
+      white-space: nowrap;
+      font-family: "Frank Ruhl Libre", "Alef", serif;
+    }
+
+    // side logos (left / right)
+    .yom-hashas__logo {
+      width: 120px;
+      height: auto;
+      opacity: 0.95;
+      flex: 0 0 120px;
+    }
+
+    // ensure big header doesn't wrap logos under title on narrow screens
+    @media (max-width: 900px) {
+      padding: 20px 12px;
+      .yom-hashas__title {
+        font-size: 48px;
+      }
+      .yom-hashas__logo {
+        display: none;
+      }
+    }
+  }
+
+  &__panel {
+    background: $cream;
+    padding: 28px 28px 40px;
+    // subtle outer border bottom
+    border-bottom: 12px solid rgba(0,0,0,0.02);
+  }
+
+  // The grid that contains all daf pills
+  .yom-hashas-dafim-list {
+    display: grid;
+    // many narrow columns across the page - adapt columns by min width
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px 18px;
+    align-items: start;
+    // make items pack tightly like tiles in photo
+    > * {
+      justify-self: stretch;
+    }
+
+    // Each daf "pill" card
+    .daf-card {
+      background: $pill-bg;
+      border: 1px solid $pill-border;
+      border-radius: 10px;
+      padding: 10px 12px;
+      box-shadow: $shadow-subtle;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 54px;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      overflow: hidden;
+
+      // inner layout: small top meta line and big stream of text below
+      .daf-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .daf-title {
+        font-weight: 700;
+        font-size: 15px;
+        color: $pill-text;
+        text-align: right;
+      }
+
+      .daf-meta {
+        font-size: 11px;
+        color: $pill-muted;
+        opacity: 0.95;
+        text-align: left;
+      }
+
+      .daf-sub {
+        font-size: 11px;
+        color: darken($pill-muted, 10%);
+        line-height: 1.1;
+        margin-top: 2px;
+        text-align: right;
+      }
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: $shadow-lift;
+      }
+    }
+
+    // Selected / highlighted pill (dark band)
+    .daf-card--active {
+      background: linear-gradient(180deg, $selected-p 0%, darken($selected-p, 6%) 100%);
+      color: $selected-text;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 4px 12px rgba(10,20,20,0.15);
+
+      .daf-title, .daf-meta, .daf-sub {
+        color: $selected-text;
+      }
+    }
+
+    // Some pills in the photo show an inner thin vertical divider and a two-column text layout.
+    // Support an optional two-col layout inside each pill.
+    .daf-card--two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 10px;
+
+      // small vertical divider near center (subtle)
+      &::before {
+        content: "";
+        width: 1px;
+        background: rgba(0,0,0,0.06);
+        margin-inline-start: 6px; // because RTL
+        margin-inline-end: 6px;
+        border-radius: 1px;
+      }
+
+      .daf-left, .daf-right {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .daf-left { text-align: left; }
+      .daf-right { text-align: right; }
+    }
+
+    // make the grid visually dense like poster
+    @media (min-width: 1400px) {
+      gap: 12px 16px;
+    }
+
+    // smaller screens - fewer columns, keep pills legible
+    @media (max-width: 760px) {
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 12px;
+      .daf-card { min-height: 64px; }
+    }
+  }
+
+  // footer bar like in photo
+  &__foot {
+    background: $footer-bg;
+    color: rgba(255,255,255,0.95);
+    padding: 14px 22px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    font-size: 14px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+/* Accessibility & print-friendly tweaks */
+@media print {
+  .yom-hashas__head, .yom-hashas__foot { display: none; }
+  .yom-hashas-dafim-list { grid-template-columns: repeat(6, 1fr) !important; }
+}
