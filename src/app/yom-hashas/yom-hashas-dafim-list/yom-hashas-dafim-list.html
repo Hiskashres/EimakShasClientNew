@@ -1,1 +1,8 @@
-<p>yom-hashas-dafim-list works!</p>
+<h3>Yom Hashas Dafim</h3>
+
+<div *ngFor="let daf of dafim">
+    <Button (click)="completeDaf(daf.dafId)">{{ daf.isCompleted ? '✓' : '✕' }}</Button>
+    <p>{{daf.masechtaName}} דף {{daf.dafLetter}}</p>
+</div>
+
+<h1>TEST</h1>
