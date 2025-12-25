@@ -16,7 +16,7 @@ import { YomHashasUsersPage } from './yom-hashas/yom-hashas-users-page/yom-hasha
 import { YomHashasDafimPage } from './yom-hashas/yom-hashas-dafim-page/yom-hashas-dafim-page';
 
 export const routes: Routes = [
-    // { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+    { path: '', redirectTo: 'users', pathMatch: 'full' },
     // { path: 'welcome', component: WelcomePageComponent},
     { path: 'users/:userId/dafim', component: AssignDafim, children: [{path: '', component: SelectDafim }] },
     { path: 'users/add', component: UserFormComponent },
