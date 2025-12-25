@@ -1,0 +1,169 @@
+/* Page background and centering */
+:host, .yhd-page {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  background: #f6efe3; /* page beige (matches image) */
+  font-family: "Alef", "Rubik", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding: 28px 22px;
+  box-sizing: border-box;
+}
+
+/* keep inner content full width but with comfortable insets */
+.yhd-inner {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* grid that creates many narrow columns like the screenshot */
+.daf-grid {
+  display: grid;
+  /* use small min to allow many columns on wide monitors */
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px 18px;
+  align-items: start;
+  width: 100%;
+}
+
+/* each card looks like the rounded pill from the image */
+.daf-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px; /* pill-like height */
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: linear-gradient(#f8f1e6, #f5eadb); /* subtle gradient for depth */
+  border: 1px solid #e3d0b7; /* thin outer border */
+  box-shadow:
+    0 2px 0 rgba(#000, 0.02),
+    inset 0 1px 0 rgba(255,255,255,0.6); /* light inner gloss */
+  cursor: pointer;
+  text-align: right;
+  direction: rtl;
+  transition: transform .08s ease, box-shadow .12s ease;
+  color: #2b2b2b;
+  overflow: hidden;
+  min-width: 140px;
+}
+
+/* small hover lift */
+.daf-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+/* left block: masechta + daf letter (in RHS because dir=rtl) */
+.daf-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  min-width: 86px;
+}
+
+/* masechta name small and slightly bold */
+.masechta {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2f2f2f;
+  line-height: 1;
+  letter-spacing: 0.2px;
+}
+
+/* daf label slightly larger */
+.daf-letter {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2f2f2f;
+  line-height: 1;
+}
+
+/* visual vertical divider between left and right sections */
+.divider {
+  width: 1px;
+  height: 56%;
+  background: linear-gradient(#d6c7ad, #e9dac0);
+  margin: 0 12px;
+  border-radius: 2px;
+  align-self: center;
+  opacity: 0.9;
+}
+
+/* right block with chavrisa lines (smaller text) */
+.daf-right {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  padding-left: 6px;
+  text-align: right;
+}
+
+/* chavrisa lines styling */
+.chavrisa {
+  font-size: 11px;
+  color: #5b523f;
+  opacity: 0.95;
+  line-height: 1.05;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* optional small subtle left-side vertical micro-line in light cards (like image) */
+.daf-card::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+  margin-left: 8px;
+}
+
+/* Completed (dark) variant — invert palette to match screenshot dark strip */
+.daf-card.completed {
+  background: linear-gradient(#2f4043, #2b3b3d);
+  color: #f4f2e8;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* completed variant text colors */
+.daf-card.completed .masechta,
+.daf-card.completed .daf-letter,
+.daf-card.completed .chavrisa {
+  color: #f5f3ea;
+  opacity: 0.98;
+}
+
+/* lighten divider for completed */
+.daf-card.completed .divider {
+  background: linear-gradient(#405357, #2d3f41);
+  opacity: 0.55;
+}
+
+/* responsiveness: on small screens use fewer columns and slightly taller pills */
+@media (max-width: 900px) {
+  .daf-grid {
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 12px;
+  }
+  .daf-card {
+    height: 74px;
+    padding: 14px;
+  }
+  .masechta { font-size: 13px; }
+  .daf-letter { font-size: 15px; }
+}
+
+/* when the user navigates with keyboard, show focus outline */
+.daf-card:focus {
+  outline: 3px solid rgba(60, 120, 110, 0.12);
+  outline-offset: 2px;
+  transform: translateY(-1px);
+}

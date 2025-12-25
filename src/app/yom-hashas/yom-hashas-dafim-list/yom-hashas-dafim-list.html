@@ -1,10 +1,27 @@
-<h3>Yom Hashas Dafim</h3>
+<div class="yhd-page" dir="rtl" aria-label="רשימת דפים — יום השאס">
+  <div class="yhd-inner">
+    <div class="daf-grid" role="list">
+      <button
+        *ngFor="let daf of dafim"
+        class="daf-card"
+        role="listitem"
+        [class.completed]="daf.isCompleted"
+        (click)="completeDaf(daf.dafId)"
+        [attr.aria-pressed]="daf.isCompleted"
+        title="{{daf.masechtaName}} — דף {{daf.dafLetter}}"
+      >
+        <div class="daf-left">
+          <div class="masechta">{{ daf.masechtaName }}</div>
+          <div class="daf-letter">דף {{ daf.dafLetter }}</div>
+        </div>
 
-<div *ngFor="let daf of dafim">
-    <Button (click)="completeDaf(daf.dafId)">{{ daf.isCompleted ? '✓' : '✕' }}</Button>
-    <p>{{daf.masechtaName}} דף {{daf.dafLetter}}</p>
-    <p>{{daf.chavrisa1}}</p>
-    <p>{{daf.chavrisa2}}</p>
+        <div class="divider" aria-hidden="true"></div>
+
+        <div class="daf-right">
+          <div class="chavrisa chavrisa-1">{{ daf.chavrisa1 }}</div>
+          <div class="chavrisa chavrisa-2">{{ daf.chavrisa2 }}</div>
+        </div>
+      </button>
+    </div>
+  </div>
 </div>
-
-<!-- <h1>TEST</h1> -->
