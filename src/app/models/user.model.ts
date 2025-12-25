@@ -1,5 +1,4 @@
 import { UserMasechta } from "./user-masechta";
-import { UserUmid } from "./user-umid.model";
 
 export interface User {
     userId: number;

@@ -3,6 +3,8 @@
 <div *ngFor="let daf of dafim">
     <Button (click)="completeDaf(daf.dafId)">{{ daf.isCompleted ? '✓' : '✕' }}</Button>
     <p>{{daf.masechtaName}} דף {{daf.dafLetter}}</p>
+    <p>{{daf.chavrisa1}}</p>
+    <p>{{daf.chavrisa2}}</p>
 </div>
 
 <!-- <h1>TEST</h1> -->

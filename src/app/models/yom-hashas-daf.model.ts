@@ -5,4 +5,6 @@ export interface YomHashasDaf {
     masechtaName: string;
     masechtaOrder: number;
     isCompleted: boolean;
+    chavrisa1: string;
+    chavrisa2: string;
 }
