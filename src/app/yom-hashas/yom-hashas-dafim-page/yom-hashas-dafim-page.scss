@@ -1,0 +1,179 @@
+/* Page background and centering (same visual style as the list) */
+:host, .yhd-page {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+    background: #f6efe3; /* page beige */
+    font-family: "Alef", "Rubik", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding: 28px 22px;
+    box-sizing: border-box;
+  
+    /* Ensure the whole page is RTL */
+    direction: rtl;
+  }
+  
+  /* Inner wrapper */
+  .yhd-inner {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  /* Grid layout to match the list appearance */
+  .daf-grid {
+    display: grid;
+    /* allow many columns on wide screens */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px 18px;
+    align-items: start;
+    width: 100%;
+  }
+  
+  /* Card / pill appearance (non-clickable version) */
+  .daf-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: linear-gradient(#f8f1e6, #f5eadb);
+    border: 1px solid #e3d0b7;
+    box-shadow:
+      0 2px 0 rgba(0,0,0,0.02),
+      inset 0 1px 0 rgba(255,255,255,0.6);
+    /* non-interactive */
+    cursor: default;
+    pointer-events: auto; /* still allow selection if needed, but not clickable actions */
+    text-align: right;
+    transition: none;
+    color: #2b2b2b;
+    overflow: hidden;
+    min-width: 140px;
+    direction: rtl;
+  }
+  
+  /* Keep visual "lift" off — no hover transform for static page, but maintain slight shadow */
+  .daf-card:hover {
+    /* no transform for non-clickable page, but keep subtle appearance */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.03);
+  }
+  
+  /* Left block: masechta + daf letter */
+  .daf-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    min-width: 86px;
+  }
+  
+  /* masechta name styling */
+  .masechta {
+    font-size: 12px;
+    font-weight: 600;
+    color: #2f2f2f;
+    line-height: 1;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* daf label */
+  .daf-letter {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2f2f2f;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* vertical divider */
+  .divider {
+    width: 1px;
+    height: 56%;
+    background: linear-gradient(#d6c7ad, #e9dac0);
+    margin: 0 12px;
+    border-radius: 2px;
+    align-self: center;
+    opacity: 0.9;
+  }
+  
+  /* right block with chavrisa lines */
+  .daf-right {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    padding-left: 6px;
+    text-align: right;
+    min-width: 0; /* allow proper shrinking so text wraps/ellipsizes correctly */
+  }
+  
+  /* chavrisa text — keep compact but readable */
+  .chavrisa {
+    font-size: 11px;
+    color: #5b523f;
+    opacity: 0.95;
+    line-height: 1.05;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  
+  /* small decorative pseudo element (kept for parity with list) */
+  .daf-card::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: transparent;
+    margin-left: 8px;
+  }
+  
+  /* Completed (dark) variant — same look as in the list */
+  .daf-card.completed {
+    background: linear-gradient(#2f4043, #2b3b3d);
+    color: #f4f2e8;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  }
+  
+  /* completed text colors */
+  .daf-card.completed .masechta,
+  .daf-card.completed .daf-letter,
+  .daf-card.completed .chavrisa {
+    color: #f5f3ea;
+    opacity: 0.98;
+  }
+  
+  /* lighten divider in completed cards */
+  .daf-card.completed .divider {
+    background: linear-gradient(#405357, #2d3f41);
+    opacity: 0.55;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 900px) {
+    .daf-grid {
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 12px;
+    }
+    .daf-card {
+      height: 74px;
+      padding: 14px;
+    }
+    .masechta { font-size: 13px; }
+    .daf-letter { font-size: 15px; }
+  }
+  
+  /* Remove focus outline for non-interactive card, but keep accessibility when needed */
+  .daf-card:focus {
+    outline: none;
+  }

@@ -30,6 +30,7 @@ export const routes: Routes = [
     { path: 'yom-hashas/campaign', component: YomHashasHeaderFooter, children: [{path: '', component: YomHashasMain }] },
     { path: 'yom-hashas/campaign/bonus', component: YomHashasHeaderFooter, children: [{path: '', component: YomHashasBonusPage }] },
     { path: 'yom-hashas/campaign/users', component: YomHashasHeaderFooter, children: [{path: '', component: YomHashasUsersPage }] },
-    { path: 'yom-hashas/campaign/dafim', component: YomHashasHeaderFooter, children: [{path: '', component: YomHashasDafimPage }] }
+    // { path: 'yom-hashas/campaign/dafim', component: YomHashasHeaderFooter, children: [{path: '', component: YomHashasDafimPage }] },
+    { path: 'yom-hashas/campaign/dafim', component: YomHashasDafimPage }
 
 ];
