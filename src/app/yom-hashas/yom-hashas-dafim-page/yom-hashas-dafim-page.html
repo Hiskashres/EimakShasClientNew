@@ -1,1 +1,26 @@
-<p>yom-hashas-dafim-page works!</p>
+<div class="yhd-page" dir="rtl" aria-label="רשימת דפים — יום השאס">
+    <div class="yhd-inner">
+      <div class="daf-grid" role="list">
+        <div
+          *ngFor="let daf of dafim"
+          class="daf-card"
+          role="listitem"
+          [class.completed]="daf.isCompleted"
+          title="{{daf.masechtaName}} — דף {{daf.dafLetter}}"
+          aria-current="{{daf.isCompleted ? 'true' : 'false'}}"
+        >
+          <div class="daf-left">
+            <div class="masechta">{{ daf.masechtaName }}</div>
+            <div class="daf-letter">דף {{ daf.dafLetter }}</div>
+          </div>
+  
+          <div class="divider" aria-hidden="true"></div>
+  
+          <div class="daf-right">
+            <div class="chavrisa chavrisa-1">{{ daf.chavrisa1 }}</div>
+            <div class="chavrisa chavrisa-2">{{ daf.chavrisa2 }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
