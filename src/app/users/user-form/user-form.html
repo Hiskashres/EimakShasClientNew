@@ -9,12 +9,14 @@
 
     <label>פאון</label>
     <input [(ngModel)]="user.phone" name="phone"/>
-    <select [ngModel]="selectedUserId" (ngModelChange)="onSelect($event)">
-        <option [ngValue]="null" disabled>Select user...</option>
-        <option *ngFor="let user of users" [ngValue]="user.userId">
-          {{ user.firstName }} {{ user.lastName }}
-        </option>
-      </select>
+
+    <label>חברותא</label>
+    <select [(ngModel)]="selectedUserId" name="selectedUserId" (ngModelChange)="onSelect($event)">
+      <option [ngValue]="null" disabled [selected]="selectedUserId === null">Select user...</option>
+      <option *ngFor="let u of users" [ngValue]="u.userId">
+        {{ u.firstName }} {{ u.lastName }}
+      </option>
+  </select>
       
     
     <label>דף ליום</label>
