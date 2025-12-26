@@ -1,72 +1,115 @@
-<!-- <h1>Yom Hashas</h1>
+<div class="yhd-page" dir="rtl" aria-label="יום השאס — דשבורד ראשי">
+  <div class="yhd-inner">
+    <div class="yhd-grid">
+      <!-- LEFT: gauge / progress area -->
+      <section class="left" aria-hidden="false">
+        <div class="gauge-wrap">
+          <!-- semicircular progress ring built with conic-gradient + clip -->
+          <div class="gauge-outer">
+            <!-- progress layer (conic gradient driven by percentage) -->
+            <div
+              class="gauge-progress"
+              [style.background]="
+                'conic-gradient(' +
+                '#37484C ' + (yomHashasInfo?.percentageFinished ?? 0) + '%, ' +
+                '#B2B4AD ' + (yomHashasInfo?.percentageFinished ?? 0) + '%)'
+              "
+            ></div>
 
-<div>Amount of dafim: {{yomHashasInfo.dafimAmount}}</div>
-<div>Dafim already learned: {{yomHashasInfo.dafimFinished}}</div>
-<div>Dafim not learned: {{yomHashasInfo.dafimNotFinished}}</div>
-<div>Percentage already finished: {{yomHashasInfo.percentageFinished}}</div>
-<div>Today's goal is: {{yomHashasInfo.mainGoal}}</div>
-<div>Time to finish is: {{yomHashasInfo.endTime}}</div> -->
+            <!-- inner mask circle to create ring thickness -->
+            <div class="gauge-inner"></div>
 
+            <!-- needle -->
+            <div
+              class="gauge-needle"
+              [style.transform]="
+                'rotate(' + (((yomHashasInfo?.percentageFinished ?? 0) / 100) * 180 - 90) + 'deg)'
+              "
+            ></div>
 
+            <!-- small top label above center -->
+            <div class="gauge-top-label">
+              <div class="top-text">אונזער ציל איז צו דערגרייכן</div>
+              <div class="top-goal">{{ yomHashasInfo?.mainGoal }}</div>
+            </div>
 
+            <!-- central big short summary -->
+            <div class="gauge-center">
+              <div class="big-number">{{ yomHashasInfo?.dafimFinished }}</div>
+              <div class="big-label">בלאט</div>
+            </div>
+          </div>
 
-<!-- Charity Dashboard Layout -->
-<style>
-    body { margin: 0; font-family: sans-serif; background: #E6DED5; }
-    .header { background: #2D3E40; color: white; padding: 20px; text-align: center; height: 100px; }
-    .container { display: flex; height: calc(100vh - 150px); }
-    
-    /* Left Sidebar: Gauge & Timer */
-    .left-side { width: 35%; padding: 20px; border-right: 2px solid #C5A059; display: flex; flex-direction: column; align-items: center; justify-content: space-around; }
-    .gauge { width: 250px; height: 250px; border-radius: 50%; border: 15px solid #ccc; border-top: 15px solid #C5A059; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: bold; }
-    .timer { font-size: 50px; font-family: monospace; background: white; padding: 10px 20px; border: 2px solid #2D3E40; border-radius: 10px; }
-  
-    /* Right Side: Updates Feed */
-    .right-side { width: 65%; padding: 20px; overflow-y: auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-    .update-card { background: #F9F4F0; border: 1.5px solid #C5A059; padding: 15px; border-radius: 5px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
-    .update-name { font-weight: bold; color: #2D3E40; }
-  
-    /* Bottom Ticker */
-    .ticker-wrap { position: fixed; bottom: 0; width: 100%; background: #6D6E71; color: white; padding: 10px 0; overflow: hidden; }
-    .ticker { display: flex; white-space: nowrap; animation: marquee 30s linear infinite; }
-    .ticker-item { padding: 0 40px; font-size: 18px; }
-    @keyframes marquee {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-    }
-  </style>
-  
-  <div class="header">
-    <h1>נאך א בלאט - LIVE UPDATES</h1>
-    <p>(VIDEO PLACEHOLDER)</p>
-  </div>
-  
-  <div class="container">
-    <div class="left-side">
-      <div class="gauge">178 <br> בלאט</div>
-      <div class="timer" id="timer">01 : 47 : 26</div>
-      <p>שעה : מינוט : סעקונדעס</p>
-    </div>
-    
-    <div class="right-side">
-      <div class="update-card">
-        <div class="update-name">אהרן יוסף עסטרייכער</div>
-        <div>מגילה דף ט"ז</div>
-      </div>
-      <div class="update-card">
-        <div class="update-name">שמעון פיש</div>
-        <div>בב"מ דף קלז.</div>
-      </div>
-      <!-- More cards will populate here dynamically -->
-    </div>
-  </div>
-  
-  <div class="ticker-wrap">
-    <div class="ticker">
-      <div class="ticker-item">אהרן יוסף עסטרייכער - 10 בלאט</div>
-      <div class="ticker-item">שמעון פיש - 5 בלאט</div>
-      <div class="ticker-item">יוסף בינער - 10 בלאט</div>
+          <!-- insert this inside the existing gauge-footer (or replace gauge-footer's contents) -->
+<div class="gauge-footer">
+  <!-- Progress line: completed portion is dark, remainder is light -->
+  <div
+    class="yh-progress"
+    role="progressbar"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    [attr.aria-valuenow]="percent"
+    title="{{ percent }}%"
+  >
+    <div
+      class="yh-progress__fill"
+      [style.width.%]="percent"
+      aria-hidden="true"
+    ></div>
+
+    <!-- optional label overlay (centered percentage text) -->
+    <div class="yh-progress__label" aria-hidden="true">
+      {{ percent }}%
     </div>
   </div>
-  
-  
+
+  <div class="percent-text">שוין דערגרייכט בעז"ה {{ yomHashasInfo?.percentageFinished }}%</div>
+</div>
+
+          <!-- countdown block (layout only) -->
+          <div class="countdown">
+            <div class="countdown-value">
+              <span class="num">03</span>
+              <span class="label">שעה</span>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-value">
+              <span class="num">47</span>
+              <span class="label">מינט</span>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-value">
+              <span class="num">26</span>
+              <span class="label">סקונדעס</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: dafim grid (same visual style as your dafim-list cards, read-only) -->
+      <section class="right" aria-label="רשימת דפים">
+        <div class="daf-grid" role="list">
+          <div
+            *ngFor="let daf of dafim"
+            class="daf-card"
+            role="listitem"
+            [class.completed]="daf.isCompleted"
+            title="{{daf.masechtaName}} — דף {{daf.dafLetter}}"
+          >
+            <div class="daf-left">
+              <div class="masechta">{{ daf.masechtaName }}</div>
+              <div class="daf-letter">דף {{ daf.dafLetter }}</div>
+            </div>
+
+            <div class="divider" aria-hidden="true"></div>
+
+            <div class="daf-right">
+              <div class="chavrisa chavrisa-1">{{ daf.chavrisa1 }}</div>
+              <div class="chavrisa chavrisa-2">{{ daf.chavrisa2 }}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
