@@ -57,36 +57,26 @@
     height: 100%;
     border-radius: 50%;
     transform: rotate(-90deg); /* start from left side for progress */
-    /* background will be set inline from the template to reflect percentage:
+    /* background set inline from the template to reflect percentage:
        dark portion: #37484C, remainder: #B2B4AD (pale gray) */
-    filter: drop-shadow(0 3px 0 rgba(0,0,0,0.06));
+    /* remove shadows/filters that created artifacts */
+    filter: none;
+    box-shadow: none;
   }
   
-  /* create ring thickness by masking inner circle */
+  /* create ring thickness by masking inner circle
+     Expanded the mask size and shifted slightly to fully cover the small wedge/triangle
+     and any lower inner grey shape that was visible in the screenshot. */
   .gauge-inner {
     position: absolute;
-    left: 16%;
-    top: 16%;
-    width: 68%;
-    height: 68%;
+    left: 12%;   /* reduced to move mask slightly left/up */
+    top: 12%;    /* reduced to move mask slightly up */
+    width: 76%;  /* increased to cover wedge */
+    height: 76%; /* increased to cover wedge */
     border-radius: 50%;
     background: #F6EFE3; /* same as page background (looks like empty center) */
     z-index: 2;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
-  }
-  
-  /* needle: narrow rounded rectangle anchored at center bottom and rotated */
-  .gauge-needle {
-    position: absolute;
-    left: 50%;
-    top: 18%;
-    width: 8px;
-    height: 72%;
-    background: linear-gradient(#D9B97C, #C99D56); /* gold needle per image (#D9B97C) */
-    border-radius: 8px;
-    transform-origin: 50% 84%;
-    z-index: 3;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.12);
   }
   
   /* small top label above center */
@@ -138,10 +128,37 @@
     text-align: center;
     color: #37484C;
   }
-  .gauge-footer .percent-text {
-    font-size: 15px;
+  
+  /* ---------- Progress line styles (placed under the gauge) ---------- */
+  .yh-progress {
+    width: 320px;
+    max-width: 92%;
+    height: 18px;
+    border-radius: 999px;
+    background: #E9DCC7; /* track color */
+    position: relative;
+    margin: 8px auto 12px auto;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 3px 10px rgba(0,0,0,0.04);
+    overflow: hidden;
+  }
+  .yh-progress__fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #37484C 0%, #2F4043 100%); /* completed color(s) */
+    transition: width 600ms cubic-bezier(.2,.9,.2,1);
+    border-radius: inherit;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .yh-progress__label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     font-weight: 700;
-    opacity: 0.9;
+    font-size: 13px;
+    color: #37484C;
+    pointer-events: none;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.03);
   }
   
   /* countdown (visual only) */
@@ -283,57 +300,3 @@
   
   /* small accessibility and polish */
   .daf-card:focus { outline: none; }
-
-  /* --- progress line styles --- */
-.yh-progress {
-    width: 320px;        /* adjust to fit under the gauge; change for responsiveness */
-    max-width: 92%;
-    height: 18px;
-    border-radius: 999px;
-    background: #E9DCC7; /* remaining / track color (light beige) */
-    position: relative;
-    margin: 8px auto 12px auto;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 3px 10px rgba(0,0,0,0.04);
-    overflow: hidden;
-  }
-  
-  /* filled portion */
-  .yh-progress__fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #37484C 0%, #2F4043 100%); /* completed color(s) */
-    transition: width 600ms cubic-bezier(.2,.9,.2,1);
-    border-radius: inherit; /* keep rounded cap */
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
-  }
-  
-  /* optional centered label on top of the bar */
-  .yh-progress__label {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: 700;
-    font-size: 13px;
-    color: #F7F5ED; /* light color for contrast on top of dark fill */
-    pointer-events: none;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.15);
-    /* We want the label readable when the bar is small — show only when percent > 6,
-       hide otherwise so it doesn't clash with light track; adjust as you like. */
-    opacity: 0;
-    transition: opacity 220ms ease;
-  }
-  
-  /* show label when the fill is at least a little visible; JS-less approach:
-     we use the percent value to toggle a class when needed, but a pure-CSS fallback is:
-     show label always with color adapted. If you prefer, remove the opacity toggle. */
-  .yh-progress[aria-valuenow] .yh-progress__label {
-    opacity: 1;
-    color: #37484C; /* dark color so it reads on light track when small fill */
-  }
-  
-  /* small responsive tweak */
-  @media (max-width: 900px) {
-    .yh-progress { width: 260px; height: 14px; }
-    .yh-progress__label { font-size: 12px; }
-  }
